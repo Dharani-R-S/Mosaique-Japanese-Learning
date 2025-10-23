@@ -1,0 +1,50 @@
+{% extends 'webapp/base.html' %}
+{% load static %}
+{% block content %}
+<section>
+  <div class="bg-white rounded-xl p-4 shadow-sm">
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-xl font-semibold">JLPT Practice — Level {{ level }}</h2>
+        <div class="text-xs text-gray-500">Sample test / quiz</div>
+      </div>
+      <div class="text-sm text-gray-600">Time: {{ time_limit }} min</div>
+    </div>
+
+    <form method="post" class="mt-4 space-y-4">
+      {% csrf_token %}
+      {% for q in questions %}
+      <div class="quiz-card">
+        <div class="quiz-question">Q{{ forloop.counter }}. {{ q.question }}</div>
+        <div class="mt-2 space-y-2">
+          {% for opt in q.options %}
+            <label class="flex items-center gap-2">
+              <input type="radio" name="q{{ forloop.counter }}" value="{{ forloop.counter0 }}">
+              <span class="text-sm">{{ opt }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="flex justify-end">
+        <button class="px-4 py-2 rounded-lg play-btn">Submit</button>
+      </div>
+    </form>
+
+    {% if result %}
+    <div class="mt-4 bg-white rounded-xl p-4 shadow-sm">
+      <div class="font-semibold">Results: {{ result.correct }} / {{ result.total }} ({{ result.percent }}%)</div>
+      <ul class="mt-2 text-sm">
+        {% for d in result.details %}
+        <li>
+          Q{{ forloop.counter }}: {% if d.is_correct %}✅{% else %}❌{% endif %} — Correct answer:
+          {{ d.options.d.0|default:"" }} <!-- placeholder - detailed explanation in backend -->
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

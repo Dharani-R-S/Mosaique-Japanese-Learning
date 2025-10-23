@@ -1,0 +1,85 @@
+{% extends 'webapp/base.html' %}
+{% load static %}
+{% block content %}
+<section>
+  <!-- Header -->
+  <div class="bg-white rounded-xl p-4 shadow-sm flex items-center justify-between">
+    <div>
+      <h2 class="text-xl font-semibold">Listening Practice</h2>
+      <div class="text-xs text-gray-500">
+        Level: {{ level }} — short audio snippets with comprehension questions
+      </div>
+    </div>
+    <div class="text-sm text-gray-600">Unit: {{ unit }}</div>
+  </div>
+
+  <!-- Audio list -->
+  <div class="mt-6 space-y-4">
+    {% for audio in audio_list %}
+    <div class="bg-white rounded-xl p-4 shadow-sm flex flex-col md:flex-row md:items-center gap-4">
+      <!-- play area + waveform -->
+      <div class="w-full md:w-64">
+        <div class="flex items-center gap-3">
+          <button
+            data-audio-src="{% static audio.file %}"
+            class="btn-play rounded-lg px-3 py-2 bg-indigo-600 text-white hover:bg-indigo-700 transition">
+            Play
+          </button>
+          <div class="flex-1">
+            <div class="text-sm font-semibold">
+              Audio {{ forloop.counter }} — {{ audio.title }}
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
+              ~{{ audio.duration }}s • Speaker {{ audio.speaker }}
+            </div>
+          </div>
+        </div>
+
+        <!-- waveform placeholder -->
+        <div class="mt-3 h-10 bg-gradient-to-r from-gray-100 to-white rounded-md overflow-hidden relative">
+          <div class="wave" style="height:100%; width:100%;"></div>
+        </div>
+      </div>
+
+      <!-- question area -->
+      <div class="flex-1">
+        <div class="text-sm text-gray-700">{{ audio.question }}</div>
+        <div class="mt-3 grid grid-cols-2 gap-3">
+          {% for opt in audio.options %}
+          <label class="flex items-center gap-2">
+            <input type="radio" name="q{{ forloop.parentloop.counter }}" value="{{ opt }}">
+            <span class="text-sm">{{ opt }}</span>
+          </label>
+          {% endfor %}
+        </div>
+
+        <div class="mt-4 flex items-center gap-3">
+          <a href="#" class="text-sm text-indigo-600">Open transcript</a>
+          <a href="#" class="text-sm text-gray-500">Mark for review</a>
+        </div>
+      </div>
+
+      <!-- right meta -->
+      <div class="w-full md:w-32 text-left md:text-right mt-3 md:mt-0">
+        <div class="text-sm text-gray-500">Difficulty</div>
+        <div class="text-lg font-semibold">{{ audio.difficulty }}</div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="text-center text-gray-500 py-6">
+      No audio lessons found.
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- CTA -->
+  <div class="mt-6 flex justify-end">
+    <a href="{% url 'webapp:jlpt_test' level=level %}" class="px-4 py-2 rounded-lg play-btn">
+      Try a listening quiz
+    </a>
+  </div>
+</section>
+
+<!-- audio element used by JS -->
+<audio id="global-audio" preload="auto"></audio>
+{% endblock %}

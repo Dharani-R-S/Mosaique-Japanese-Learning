@@ -1,0 +1,25 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+db.sqlite3
+*.log
+
+# Environment
+venv/
+.env
+
+# Django static and cache
+staticfiles/
+media/
+*.pid
+*.seed
+
+# VS Code / IDEs
+.vscode/
+.idea/
+*.swp
+
+# System files
+.DS_Store
+Thumbs.db

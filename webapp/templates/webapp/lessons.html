@@ -1,0 +1,29 @@
+{% extends 'webapp/base.html' %}
+{% load static %}
+{% block content %}
+<h2 class="text-lg font-semibold mb-4">All Lessons</h2>
+
+<div class="grid md:grid-cols-2 gap-4">
+  {% for l in lessons %}
+    <a href="{% url 'webapp:lesson_detail' l.id %}" class="block">
+      <div class="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="font-semibold">{{ l.title }}</div>
+            <div class="text-xs text-gray-500">{{ l.subtitle }}</div>
+          </div>
+          <div class="text-sm font-medium">{{ l.progress }}%</div>
+        </div>
+
+        <div class="mt-3">
+          <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+            <div class="h-2 rounded-full" style="width: {{ l.progress }}%; background: linear-gradient(90deg,#fca5a5,#a7f3d0)"></div>
+          </div>
+        </div>
+      </div>
+    </a>
+  {% empty %}
+    <div class="col-span-2 text-center text-gray-500 py-8">No lessons available yet.</div>
+  {% endfor %}
+</div>
+{% endblock %}

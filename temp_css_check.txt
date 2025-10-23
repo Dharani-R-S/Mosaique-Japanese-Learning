@@ -1,0 +1,247 @@
+/* custom.css — Mosaique frontend base styles
+   Place at: webapp/static/webapp/css/custom.css
+*/
+
+/* ---- 1) Fonts ----
+   Using Inter from Google Fonts as a neutral UI font. Replace with exact font files if you have them.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root{
+  /* Pastel color palette (adjustable) */
+  --bg: #F8FAFB; /* page bg */
+  --card-bg: #FFFFFF;
+  --muted: #6B7280; /* gray-500 */
+  --accent-1: #FBCFE8; /* pink pastel */
+  --accent-2: #CFFAFE; /* aqua pastel */
+  --accent-3: #BBF7D0; /* mint pastel */
+  --primary: #4F46E5; /* indigo-600 */
+  --success: #10B981; /* emerald-500 */
+  --glass: rgba(255,255,255,0.6);
+
+  /* Shadows */
+  --card-shadow: 0 8px 24px rgba(20,20,20,0.06);
+  --soft-shadow: 0 6px 20px rgba(20,20,20,0.04);
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+}
+
+/* ---- 2) Base ---- */
+html,body{
+  height:100%;
+  background: var(--bg);
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #111827; /* gray-900 */
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+}
+
+/* Global container width (mirrors base.html max-w-5xl) */
+.main-container{ max-width: 72rem /*1152px*/; margin: 0 auto; padding-left: 1rem; padding-right: 1rem; }
+
+/* ---- 3) Header ---- */
+header {
+  background: #fff;
+  border-bottom: 1px solid rgba(15,23,42,0.03);
+}
+
+/* logo tile */
+.logo-tile{
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  color: #374151;
+  box-shadow: none;
+  background: linear-gradient(135deg,#FBCFE8 0%, #FDE68A 100%);
+}
+
+/* ---- 4) Card styles ---- */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--r-md);
+  box-shadow: var(--card-shadow);
+  padding: 1rem;
+}
+
+.card-sm {
+  padding: 0.75rem;
+  border-radius: 12px;
+  box-shadow: var(--soft-shadow);
+}
+
+/* accent card */
+.card-accent {
+  background: linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,255,255,0.1));
+  border-radius: 16px;
+}
+
+/* small pastel icon tile inside card */
+.card-icon {
+  width:48px;
+  height:48px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  box-shadow: 0 4px 16px rgba(15,23,42,0.03);
+}
+
+/* ---- 5) Lesson card specifics ---- */
+.lesson-card {
+  transition: box-shadow .18s ease, transform .12s ease;
+}
+.lesson-card:hover { box-shadow: 0 14px 40px rgba(13,18,32,0.08); transform: translateY(-4px); }
+
+/* progress bar */
+.progress-outer{
+  background: #F3F4F6; /* gray-100 */
+  height:10px;
+  border-radius: 999px;
+  overflow:hidden;
+}
+.progress-inner{
+  height:100%;
+  border-radius:999px;
+  background: linear-gradient(90deg,#FCA5A5,#A7F3D0); /* default gradient */
+  transition: width .5s ease;
+}
+
+/* small progress text */
+.progress-text{
+  font-weight:600;
+  font-size:0.875rem;
+  color:#111827;
+}
+
+/* ---- 6) Hero / welcome ---- */
+.hero {
+  border-radius: 18px;
+  padding: 1.25rem;
+  background: linear-gradient(90deg,#fff0f6 0%, #f0f9ff 100%);
+  box-shadow: 0 8px 30px rgba(12,19,38,0.03);
+}
+
+/* ---- 7) Quick access tiles ---- */
+.quick-grid a{
+  display:block;
+  border-radius: 12px;
+  text-align:center;
+  padding:0.9rem 0.6rem;
+  background: #fff;
+  box-shadow: var(--soft-shadow);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.quick-grid a:hover{ transform: translateY(-4px); box-shadow: 0 12px 30px rgba(12,18,40,0.06); }
+.quick-grid .big { font-size: 1.4rem; font-weight:700; }
+.quick-grid .small { font-size: .78rem; color: var(--muted); }
+
+/* ---- 8) TalkMate UI (chat bubble) ---- */
+.chat-window{
+  border-radius: 12px;
+  background: #FBFDFF;
+  border: 1px solid rgba(15,23,42,0.03);
+  padding: 1rem;
+  height: 18rem;
+  overflow:auto;
+}
+.chat-bubble-user{
+  background: var(--primary);
+  color:white;
+  padding: .55rem .9rem;
+  border-radius: 14px;
+  display:inline-block;
+  max-width: 72%;
+  text-wrap: normal;
+}
+.chat-bubble-assistant{
+  background: #fff;
+  padding: .55rem .9rem;
+  border-radius: 14px;
+  display:inline-block;
+  border: 1px solid rgba(15,23,42,0.05);
+  max-width: 72%;
+}
+
+/* bubble alignment */
+.chat-row { margin-bottom: .75rem; display:flex; }
+.chat-row.user { justify-content: flex-end; }
+.chat-row.assistant { justify-content: flex-start; }
+
+/* ---- 9) Listening / Reading cards ---- */
+.practice-card {
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 60%);
+  padding: .9rem;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.03);
+}
+
+/* play button */
+.play-btn {
+  padding: .45rem .7rem;
+  border-radius: 8px;
+  background: var(--primary);
+  color: white;
+  font-weight:600;
+}
+
+/* ---- 10) JLPT test / quiz ---- */
+.quiz-card {
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,0.04);
+  background: #fff;
+}
+.quiz-question { font-weight:600; }
+
+/* radio styles (simple) */
+input[type="radio"] {
+  accent-color: var(--primary); /* modern browsers */
+}
+
+/* ---- 11) Bottom nav styling override (floating pill) ---- */
+.bottom-pill {
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  box-shadow: 0 14px 34px rgba(10,13,24,0.08);
+  display:flex;
+  gap:1.6rem;
+  align-items:center;
+  justify-content:center;
+}
+
+/* link inside pill */
+.bottom-pill a {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-decoration:none;
+  color: #374151;
+  font-weight:600;
+  font-size: .8rem;
+}
+
+/* small helpers */
+.text-muted { color: var(--muted); }
+.kicker { font-size: .78rem; color: var(--muted); font-weight:600; }
+.small { font-size: .85rem; color:var(--muted); }
+
+/* responsive tweaks */
+@media (max-width: 640px) {
+  .main-container { padding-left: .8rem; padding-right: .8rem; }
+  .chat-window { height: 14.2rem; }
+}
+
+@media (min-width: 1024px) {
+  /* more breathing room on desktop */
+  .hero { padding: 1.6rem; border-radius: 20px; }
+  .card { padding: 1.1rem; }
+}
